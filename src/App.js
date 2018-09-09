@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Hls from 'hls.js'
 
@@ -10,6 +9,7 @@ const contractAbi = require('./LedgerChannel.json').abi
 const contractAddress = '0xb80996993505eb2d95efb775333b1a5c2708086f'
 const ingridAddress = '0x8ec75ef3adf6c953775d0738e0e7bd60e647e5ef'
 const ingridKey = '0xf0f18fd1df636821d2d6a04b4d4f4c76fc33eb66c253ae1e4028bf33c48622bc'
+const lcId = '0xb042c1d41af331615fcce63f7aecae8a608ccbf200eeb71b9586fd83c35a14AF'
 
 function hexToBuffer(hexString) {
   return new Buffer(hexString.substr(2, hexString.length), 'hex')
@@ -19,7 +19,7 @@ function bufferToHex(buffer) {
   return '0x' + buffer.toString('hex')
 }
 
-const STREAM_ID = 'd8072aae72b84c63f1136e6a525dfef04e2ca5f39f232874da4a4a45372b2ebd'
+const STREAM_ID = 'af385561a577f9e00c01eb458abf3a2c5f1d120bac7368e83b4d6abbbdbe5536'
 const SOURCE = 'http://localhost:8935/stream/' + STREAM_ID + '.m3u8'
 
 class App extends Component {
@@ -57,7 +57,6 @@ class App extends Component {
   }
 
   createChannel = async () => {
-    const lcId = Web3.utils.sha3('1111' + Math.random(), { encoding: 'hex' })
     console.log('lcId', lcId)//0xb042c1d41af331615fcce63f7aecae8a608ccbf200eeb71b9586fd83c35a1453
     const balances = [Web3.utils.toWei('0.05'), '0']
     console.log('balances', balances)
@@ -79,7 +78,6 @@ class App extends Component {
   }
 
   joinChannel = async () => {
-    const lcId = '0xb042c1d41af331615fcce63f7aecae8a608ccbf200eeb71b9586fd83c35a1453'
     const callData = this.contract['joinChannel'].getData(lcId,
       [Web3.utils.toWei('0.05'), '0'])
 
@@ -108,7 +106,6 @@ class App extends Component {
   }
 
   getChannnel = async () => {
-    const lcId = '0xb042c1d41af331615fcce63f7aecae8a608ccbf200eeb71b9586fd83c35a1453'
     let tx = await new Promise((resolve, reject) => {
       this.contract.getChannel(
         lcId,
@@ -140,10 +137,9 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+      <div className="PeerDuck" align="center">
+        <header>
+            <h1 className="logo">PeerDuck</h1>
         </header>
         <p className="App-intro">
           Master Account: {this.state.masterAccount}
@@ -154,17 +150,18 @@ class App extends Component {
         <p className="App-intro">
           Ingrid Account: {ingridAddress}
         </p>
-        <button onClick={this.registerDelegateKey}>Register Delegate Key</button>
+        <button onClick={this.registerDelegateKey} className="button center">Register Delegate Key</button>
         <hr />
           <div style={this.state.videoStyle}>
-            <button onClick={this.handlePlay.bind(this)}>Play</button>
+            <button onClick={this.handlePlay.bind(this)} style={{display: 'none'}} className="button center">Play</button>
             <div className='video-container'>
                 <video ref={this.videoRef}/>
+                <iframe width="560" height="315" style={{marginLeft: '-280px'}} src="https://www.youtube.com/embed/fZEHhLloF0w" frameBorder="0"
+                        allow="autoplay; encrypted-media" allowFullScreen></iframe>
             </div>
           </div>
-        <button onClick={this.createChannel}>Create Channel</button>
-        <button onClick={this.joinChannel}>Join Channel</button>
-        <button onClick={this.getChannnel}>Get Channel</button>
+        <button onClick={this.createChannel} className="button center">Create Channel</button>
+        <button onClick={this.joinChannel} className="button center">Join Channel</button>
       </div>
     );
   }

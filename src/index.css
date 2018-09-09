@@ -12,7 +12,7 @@ body {
   /*height: 40%;*/
 }
 
-.center {
+.logo {
   text-align: center;
   font-family: 'Lobster', cursive;
   font-size: 36pt;
@@ -20,8 +20,6 @@ body {
 
 .button {
   text-align: center;
-  font-family: 'Lobster', cursive;
-  font-size: 26pt;
 }
 
 

@@ -12,17 +12,17 @@ const ingridAddress = '0x8ec75ef3adf6c953775d0738e0e7bd60e647e5ef'
 const STREAM_ID = 'd8072aae72b84c63f1136e6a525dfef04e2ca5f39f232874da4a4a45372b2ebd'
 const SOURCE = 'http://localhost:8935/stream/' + STREAM_ID + '.m3u8'
 
-class PeerDuck extends Component {
+class Ingrid extends Component {
   constructor( ) {
     super()
     this.contract = new Contract()
       this.state = {
-
+        joined: false
       }
   }
 
-  async handleStartShow () {
-      let txId = await this.contract.createChannel()
+  async handleJoinShow () {
+      let txId = await this.contract.joinChannel()
       console.log(txId)
   }
 
@@ -31,11 +31,11 @@ class PeerDuck extends Component {
       <div className="PeerDuck">
           <h1 className="center">PeerDuck</h1>
           <div style={{marginTop: '20%'}}>
-          <a onClick={this.handleStartShow.bind(this)} id="mainButton" className="button is-primary is-focused center image">Start the show</a>
+          <a onClick={this.handleJoinShow.bind(this)} id="mainButton" className="button is-primary is-focused center image">Join the show</a>
           </div>
       </div>
     );
   }
 }
 
-export default PeerDuck;
+export default Ingrid;
